@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Alav.SM
 {
-    public class SmCompositeStrategy<TSagaModel> : ISmCompositeStrategy<TSagaModel>
-        where TSagaModel: class
+    public class SmCompositeStrategy<TContextModel> : ISmCompositeStrategy<TContextModel>
+        where TContextModel: class
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -18,18 +18,18 @@ namespace Alav.SM
             _serviceProvider = serviceProvider;
         }
 
-        private readonly List<ISmStrategy<TSagaModel>> _strategies = new List<ISmStrategy<TSagaModel>>();
+        private readonly List<ISmStrategy<TContextModel>> _strategies = new List<ISmStrategy<TContextModel>>();
 
-        public ISmCompositeStrategy<TSagaModel> AddStrategy<TStrategy>()
-            where TStrategy : ISmStrategy<TSagaModel>
+        public ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>()
+            where TStrategy : ISmStrategy<TContextModel>
         {
             _strategies.Add(_serviceProvider.GetRequiredService<TStrategy>());
 
             return this;
         }
 
-        public ISmCompositeStrategy<TSagaModel> RemoveStrategy<TStrategy>()
-            where TStrategy : ISmStrategy<TSagaModel>
+        public ISmCompositeStrategy<TContextModel> RemoveStrategy<TStrategy>()
+            where TStrategy : ISmStrategy<TContextModel>
         {
             //ToDo: Оптимизировать поиск до O(1)
             var strategy = _strategies.FirstOrDefault(f => f.GetType() == typeof(TStrategy));
@@ -41,19 +41,19 @@ namespace Alav.SM
             return this;
         }
 
-        public void Process(TSagaModel sagaModel)
+        public void Process(TContextModel context)
         {
             foreach (var strategy in _strategies)
             {
-                strategy.Process(sagaModel);
+                strategy.Process(context);
             }
         }
 
-        public async Task ProcessAsync(TSagaModel sagaModel, CancellationToken cancellationToken = default)
+        public async Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default)
         {
             foreach (var strategy in _strategies)
             {
-                await strategy.ProcessAsync(sagaModel);
+                await strategy.ProcessAsync(context);
             }
         }
     }

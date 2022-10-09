@@ -5,12 +5,12 @@ namespace Alav.SM.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddAlavSM<TSagaModel>(this IServiceCollection services)
-            where TSagaModel: class
+        public static IServiceCollection AddAlavSM<TContextModel>(this IServiceCollection services)
+            where TContextModel: class
         {
             return services
-                .AddSingleton<ISmStrategyDirector<TSagaModel>, SmDirector<TSagaModel>>()
-                .AddSingleton<ISmCompositeStrategy<TSagaModel>, SmCompositeStrategy<TSagaModel>>();
+                .AddSingleton<ISmStrategyDirector<TContextModel>, SmDirector<TContextModel>>()
+                .AddSingleton<ISmCompositeStrategy<TContextModel>, SmCompositeStrategy<TContextModel>>();
         }
     }
 }

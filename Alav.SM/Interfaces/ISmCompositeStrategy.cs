@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 
 namespace Alav.SM.Interfaces
 {
-    public interface ISmCompositeStrategy<TSagaModel> : ISmStrategy<TSagaModel>
-        where TSagaModel: class
+    public interface ISmCompositeStrategy<TContextModel> : ISmStrategy<TContextModel>
+        where TContextModel: class
     {
-        ISmCompositeStrategy<TSagaModel> AddStrategy<TStrategy>()
-            where TStrategy: ISmStrategy<TSagaModel>;
+        ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>()
+            where TStrategy: ISmStrategy<TContextModel>;
 
-        ISmCompositeStrategy<TSagaModel> RemoveStrategy<TStrategy>()
-            where TStrategy : ISmStrategy<TSagaModel>;
+        ISmCompositeStrategy<TContextModel> RemoveStrategy<TStrategy>()
+            where TStrategy : ISmStrategy<TContextModel>;
     }
 }

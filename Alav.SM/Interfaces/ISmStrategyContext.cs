@@ -3,15 +3,15 @@ using System.Threading.Tasks;
 
 namespace Alav.SM.Interfaces
 {
-    public interface ISmStrategyContext<TSagaModel>
-        where TSagaModel : class
+    public interface ISmStrategyContext<TContextModel>
+        where TContextModel : class
     {
-        ISmStrategyBuilder<TSagaModel> GetBuilder(TSagaModel sagaModel);
+        ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
 
-        ISmStrategyContext<TSagaModel> Configurate(TSagaModel sagaModel);
+        ISmStrategyContext<TContextModel> Configurate(TContextModel context);
 
-        void Process(TSagaModel sagaModel);
+        void Process(TContextModel context);
 
-        Task ProcessAsync(TSagaModel sagaModel, CancellationToken cancellationToken);
+        Task ProcessAsync(TContextModel context, CancellationToken cancellationToken);
     }
 }

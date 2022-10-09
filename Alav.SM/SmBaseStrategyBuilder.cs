@@ -4,8 +4,8 @@ using System;
 
 namespace Alav.SM
 {
-    public abstract class SmBaseStrategyBuilder<TSagaModel> : ISmStrategyBuilder<TSagaModel>
-        where TSagaModel: class
+    public abstract class SmBaseStrategyBuilder<TContextModel> : ISmStrategyBuilder<TContextModel>
+        where TContextModel: class
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -14,18 +14,18 @@ namespace Alav.SM
             _serviceProvider = serviceProvider;
         }
 
-        protected ISmCompositeStrategy<TSagaModel> RootStrategy;
+        protected ISmCompositeStrategy<TContextModel> RootStrategy;
 
-        public ISmStrategyBuilder<TSagaModel> BuildRootStrategy() 
+        public ISmStrategyBuilder<TContextModel> BuildRootStrategy() 
         {
-            RootStrategy = _serviceProvider.GetRequiredService<ISmCompositeStrategy<TSagaModel>>();
+            RootStrategy = _serviceProvider.GetRequiredService<ISmCompositeStrategy<TContextModel>>();
 
             return this;
         }
 
-        public abstract ISmStrategyBuilder<TSagaModel> BuildSubStrategies();
+        public abstract ISmStrategyBuilder<TContextModel> BuildSubStrategies();
 
-        public virtual ISmStrategy<TSagaModel> GetResult()
+        public virtual ISmStrategy<TContextModel> GetResult()
         {
             return RootStrategy;
         }

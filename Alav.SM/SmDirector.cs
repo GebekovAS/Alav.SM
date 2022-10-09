@@ -2,10 +2,10 @@
 
 namespace Alav.SM
 {
-    public class SmDirector<TSagaModel> : ISmStrategyDirector<TSagaModel>
-        where TSagaModel: class
+    public class SmDirector<TContextModel> : ISmStrategyDirector<TContextModel>
+        where TContextModel: class
     {
-        public ISmStrategyBuilder<TSagaModel> Construct(ISmStrategyBuilder<TSagaModel> builder)
+        public ISmStrategyBuilder<TContextModel> Construct(ISmStrategyBuilder<TContextModel> builder)
         {
             return builder
                 .BuildRootStrategy()

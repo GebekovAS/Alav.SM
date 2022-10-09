@@ -1,12 +1,12 @@
 ﻿namespace Alav.SM.Interfaces
 {
-    public interface ISmStrategyBuilder<TSagaModel>
-        where TSagaModel: class
+    public interface ISmStrategyBuilder<TContextModel>
+        where TContextModel: class
     {
-        ISmStrategyBuilder<TSagaModel> BuildRootStrategy();
+        ISmStrategyBuilder<TContextModel> BuildRootStrategy();
 
-        ISmStrategyBuilder<TSagaModel> BuildSubStrategies();
+        ISmStrategyBuilder<TContextModel> BuildSubStrategies();
 
-        ISmStrategy<TSagaModel> GetResult();
+        ISmStrategy<TContextModel> GetResult();
     }
 }

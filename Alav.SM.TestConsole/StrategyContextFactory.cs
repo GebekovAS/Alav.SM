@@ -21,7 +21,7 @@ namespace Alav.SM.TestConsole
             _serviceProvider = serviceProvider;
         }
 
-        public override ISmStrategyContext<SagaModel> GetContext(SagaModel sagaModel)
+        public override ISmStrategyContext<SagaModel> GetContext(SagaModel context)
         {
             return _serviceProvider.GetRequiredService<MoneyTransferStrategyContext>();
         }

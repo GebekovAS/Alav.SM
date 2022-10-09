@@ -6,20 +6,20 @@ namespace Alav.SM.Interfaces
     /// <summary>
     /// Chain of Responsibility
     /// </summary>
-    /// <typeparam name="TSagaModel">Saga model</typeparam>
-    public interface ISmStrategyHandler<TSagaModel>
-        where TSagaModel: class
+    /// <typeparam name="TContextModel">Saga model</typeparam>
+    public interface ISmStrategyHandler<TContextModel>
+        where TContextModel: class
     {
         /// <summary>
         /// Set successor strategy
         /// </summary>
         /// <param name="strategy">Successor strategy</param>
         /// <returns></returns>
-        ISmStrategy<TSagaModel> SetSuccessorStrategy(ISmStrategy<TSagaModel> strategy);
+        ISmStrategy<TContextModel> SetSuccessorStrategy(ISmStrategy<TContextModel> strategy);
 
-        void Handle(TSagaModel sagaModel);
+        void Handle(TContextModel context);
 
-        Task HandleAsync(TSagaModel sagaModel, CancellationToken cancellationToken = default);
+        Task HandleAsync(TContextModel context, CancellationToken cancellationToken = default);
 
     }
 }

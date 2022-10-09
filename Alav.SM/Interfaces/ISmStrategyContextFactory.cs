@@ -1,8 +1,8 @@
 ﻿namespace Alav.SM.Interfaces
 {
-    public interface ISmStrategyContextFactory<TSagaModel>
-        where TSagaModel: class
+    public interface ISmStrategyContextFactory<TContextModel>
+        where TContextModel: class
     {
-        ISmStrategyContext<TSagaModel> GetContext(TSagaModel sagaModel);
+        ISmStrategyContext<TContextModel> GetContext(TContextModel context);
     }
 }

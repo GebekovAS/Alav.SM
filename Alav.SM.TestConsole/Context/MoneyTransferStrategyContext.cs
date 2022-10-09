@@ -16,7 +16,7 @@ namespace Alav.SM.TestConsole.Context
         public MoneyTransferStrategyContext(ISmStrategyDirector<SagaModel> director, IServiceProvider serviceProvider) : base(director, serviceProvider)
         { }
 
-        public override ISmStrategyBuilder<SagaModel> GetBuilder(SagaModel sagaModel)
+        public override ISmStrategyBuilder<SagaModel> GetBuilder(SagaModel context)
         {
             return ServiceProvider.GetRequiredService<MoneyTransferBuilder>();
         }

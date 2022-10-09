@@ -5,31 +5,31 @@ using System.Threading.Tasks;
 
 namespace Alav.SM
 {
-    public abstract class SmBaseStrategyContext<TSagaModel> : ISmStrategyContext<TSagaModel>
-        where TSagaModel: class
+    public abstract class SmBaseStrategyContext<TContextModel> : ISmStrategyContext<TContextModel>
+        where TContextModel: class
     {
-        private readonly ISmStrategyDirector<TSagaModel> _director;
+        private readonly ISmStrategyDirector<TContextModel> _director;
 
-        private ISmStrategy<TSagaModel> _strategy;
+        private ISmStrategy<TContextModel> _strategy;
 
         protected readonly IServiceProvider ServiceProvider;
 
-        public SmBaseStrategyContext(ISmStrategyDirector<TSagaModel> director,
+        public SmBaseStrategyContext(ISmStrategyDirector<TContextModel> director,
             IServiceProvider serviceProvider)
         {
             _director = director;
             ServiceProvider = serviceProvider;
         }
 
-        public abstract ISmStrategyBuilder<TSagaModel> GetBuilder(TSagaModel sagaModel);
+        public abstract ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
 
-        public ISmStrategyContext<TSagaModel> Configurate(TSagaModel sagaModel)
+        public ISmStrategyContext<TContextModel> Configurate(TContextModel context)
         {
             if (_strategy != null)
             {
                 return this;
             }
-            var builder = GetBuilder(sagaModel);
+            var builder = GetBuilder(context);
             _strategy = _director
                 .Construct(builder)
                 .GetResult();
@@ -37,14 +37,14 @@ namespace Alav.SM
             return this;
         }
 
-        public virtual void Process(TSagaModel sagaModel)
+        public virtual void Process(TContextModel context)
         {
-            _strategy.Process(sagaModel);
+            _strategy.Process(context);
         }
 
-        public virtual Task ProcessAsync(TSagaModel sagaModel, CancellationToken cancellationToken)
+        public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken)
         {
-            return _strategy.ProcessAsync(sagaModel, cancellationToken);
+            return _strategy.ProcessAsync(context, cancellationToken);
         }
     }
 }

@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 namespace Alav.SM
 {
     /// <inheritdoc />
-    public abstract class SmBaseStrategy<TSagaModel> : ISmStrategy<TSagaModel>
-        where TSagaModel: class
+    public abstract class SmBaseStrategy<TContextModel> : ISmStrategy<TContextModel>
+        where TContextModel: class
     {
         /// <inheritdoc />
-        public virtual void Process(TSagaModel sagaModel)
+        public virtual void Process(TContextModel context)
         { }
 
         /// <inheritdoc />
-        public virtual Task ProcessAsync(TSagaModel sagaModel, CancellationToken cancellationToken = default)
+        public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

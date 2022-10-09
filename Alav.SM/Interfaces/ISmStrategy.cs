@@ -6,20 +6,20 @@ namespace Alav.SM.Interfaces
     /// <summary>
     /// Strategy
     /// </summary>
-    /// <typeparam name="TSagaModel"></typeparam>
-    public interface ISmStrategy<TSagaModel> where TSagaModel: class
+    /// <typeparam name="TContextModel"></typeparam>
+    public interface ISmStrategy<TContextModel> where TContextModel: class
     {
         /// <summary>
         /// Process strategy
         /// </summary>
-        /// <param name="sagaModel">Saga model</param>
-        void Process(TSagaModel sagaModel);
+        /// <param name="context">Saga model</param>
+        void Process(TContextModel context);
 
         /// <summary>
         /// Process strategy
         /// </summary>
-        /// <param name="sagaModel">Saga model</param>
+        /// <param name="context">Saga model</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        Task ProcessAsync(TSagaModel sagaModel, CancellationToken cancellationToken = default);
+        Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default);
     }
 }
