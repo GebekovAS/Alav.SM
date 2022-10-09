@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Alav.SM
 {
+    /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public class SmCompositeStrategy<TContextModel> : ISmCompositeStrategy<TContextModel>
         where TContextModel: class
@@ -22,6 +23,7 @@ namespace Alav.SM
 
         private readonly List<ISmStrategy<TContextModel>> _strategies = new List<ISmStrategy<TContextModel>>();
 
+        /// <inheritdoc />
         public ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>()
             where TStrategy : ISmStrategy<TContextModel>
         {
@@ -30,6 +32,7 @@ namespace Alav.SM
             return this;
         }
 
+        /// <inheritdoc />
         public ISmCompositeStrategy<TContextModel> RemoveStrategy<TStrategy>()
             where TStrategy : ISmStrategy<TContextModel>
         {
@@ -43,6 +46,7 @@ namespace Alav.SM
             return this;
         }
 
+        /// <inheritdoc />
         public void Process(TContextModel context)
         {
             foreach (var strategy in _strategies)
@@ -51,6 +55,7 @@ namespace Alav.SM
             }
         }
 
+        /// <inheritdoc />
         public async Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default)
         {
             foreach (var strategy in _strategies)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alav.SM
 {
-
+    /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public abstract class SmBaseStrategyContext<TContextModel> : ISmStrategyContext<TContextModel>
         where TContextModel: class
@@ -25,8 +25,10 @@ namespace Alav.SM
             ServiceProvider = serviceProvider;
         }
 
+        /// <inheritdoc />
         public abstract ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
 
+        /// <inheritdoc />
         public ISmStrategyContext<TContextModel> Configurate(TContextModel context)
         {
             if (_strategy != null)
@@ -41,11 +43,13 @@ namespace Alav.SM
             return this;
         }
 
+        /// <inheritdoc />
         public virtual void Process(TContextModel context)
         {
             _strategy.Process(context);
         }
 
+        /// <inheritdoc />
         public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken)
         {
             return _strategy.ProcessAsync(context, cancellationToken);

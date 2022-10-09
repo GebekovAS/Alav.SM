@@ -18,9 +18,11 @@ namespace Alav.SM.TestConsole.Strategies
             Console.WriteLine($"{nameof(ExchangeRatesStrategy)}:{nameof(ProcessAsync)}");
         }
 
-        public override async Task ProcessAsync(SagaModel model, CancellationToken cancellationToken = default)
+        public override Task ProcessAsync(SagaModel model, CancellationToken cancellationToken = default)
         {
             Process(model);
+
+            return Task.CompletedTask;
         }
     }
 }

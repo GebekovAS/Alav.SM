@@ -5,6 +5,7 @@ using System;
 
 namespace Alav.SM
 {
+    /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public abstract class SmBaseStrategyBuilder<TContextModel> : ISmStrategyBuilder<TContextModel>
         where TContextModel: class
@@ -18,6 +19,7 @@ namespace Alav.SM
 
         protected ISmCompositeStrategy<TContextModel> RootStrategy;
 
+        /// <inheritdoc />
         public ISmStrategyBuilder<TContextModel> BuildRootStrategy() 
         {
             RootStrategy = _serviceProvider.GetRequiredService<SmCompositeStrategy<TContextModel>>();
@@ -25,8 +27,10 @@ namespace Alav.SM
             return this;
         }
 
+        /// <inheritdoc />
         public abstract ISmStrategyBuilder<TContextModel> BuildSubStrategies();
 
+        /// <inheritdoc />
         public virtual ISmStrategy<TContextModel> GetResult()
         {
             return RootStrategy;
