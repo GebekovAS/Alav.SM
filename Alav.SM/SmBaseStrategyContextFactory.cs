@@ -1,10 +1,17 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Alav.SM
 {
-    public abstract class SmBaseStrategyContextFactory<TContextModel> : ISmStrategyContextFactory<TContextModel>
-        where TContextModel: class
+    /// <inheritdoc />
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
+    public abstract class SmBaseStrategyContextFactory<TContextModel, TStrategyState> : ISmStrategyContextFactory<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        public abstract ISmStrategyContext<TContextModel> GetContext(TContextModel context);
+        /// <inheritdoc />
+        public abstract ISmStrategyContext<TContextModel, TStrategyState> GetContext(TContextModel context);
     }
 }

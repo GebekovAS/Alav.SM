@@ -4,6 +4,8 @@ using Alav.SM.TestConsole.Models;
 using Alav.SM.TestConsole.Strategies;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Alav.SM.TestConsole
 {
@@ -14,12 +16,23 @@ namespace Alav.SM.TestConsole
             Console.WriteLine("Start");
 
             var services = new ServiceCollection()
-                            .AddAlavSM<SagaModel>()
-                            .Scan<Program>()
+                            //.AddAlavSM<SagaModel>() //If not used Alav.DI scan
+                            .Scan()
                             .BuildServiceProvider();
 
             var strategyContextFactory = services.GetService<StrategyContextFactory>();
-            var saga = new SagaModel();
+            var saga = new SagaModel()
+            {
+                CorrelationId = Guid.NewGuid(),
+                State = Enums.SagaStateEnum.New,
+                SagaType = Enums.SagaTypeEnum.TransferMoney,
+                Object = JsonSerializer.Serialize(new SagaObjectModel
+                {
+                    CurrencyCode = "BTC",
+                    CurrencyTypeCode = "COIN"
+                })
+            };
+
             strategyContextFactory
                     .GetContext(saga)
                     .Configurate(saga)

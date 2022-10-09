@@ -1,4 +1,6 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Exceptions;
+using Alav.SM.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -8,8 +10,11 @@ using System.Threading.Tasks;
 
 namespace Alav.SM
 {
-    public class SmCompositeStrategy<TContextModel> : ISmCompositeStrategy<TContextModel>
-        where TContextModel: class
+    /// <inheritdoc />
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
+    public class SmCompositeStrategy<TContextModel,TStrategyState> : ISmCompositeStrategy<TContextModel, TStrategyState>
+        where TStrategyState : Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -18,42 +23,52 @@ namespace Alav.SM
             _serviceProvider = serviceProvider;
         }
 
-        private readonly List<ISmStrategy<TContextModel>> _strategies = new List<ISmStrategy<TContextModel>>();
+        private readonly Dictionary<TStrategyState, (ISmStrategy<TContextModel, TStrategyState> strategy, TStrategyState nextState)> _strategies = new Dictionary<TStrategyState, (ISmStrategy<TContextModel, TStrategyState> strategy, TStrategyState nextState)>();
 
-        public ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>()
-            where TStrategy : ISmStrategy<TContextModel>
+        /// <inheritdoc />
+        public ISmCompositeStrategy<TContextModel, TStrategyState> AddStrategy<TStrategy>(TStrategyState state, TStrategyState nextState)
+            where TStrategy : ISmStrategy<TContextModel, TStrategyState>
         {
-            _strategies.Add(_serviceProvider.GetRequiredService<TStrategy>());
+            _strategies.Add(state, (_serviceProvider.GetRequiredService<TStrategy>(), nextState));
 
             return this;
         }
 
-        public ISmCompositeStrategy<TContextModel> RemoveStrategy<TStrategy>()
-            where TStrategy : ISmStrategy<TContextModel>
+        /// <inheritdoc />
+        public ISmCompositeStrategy<TContextModel, TStrategyState> Remove(TStrategyState state)
         {
-            //ToDo: Оптимизировать поиск до O(1)
-            var strategy = _strategies.FirstOrDefault(f => f.GetType() == typeof(TStrategy));
-            if (strategy != null)
-            {
-                _strategies.Remove(strategy);
-            }
+            _strategies.Remove(state);
 
             return this;
         }
 
+        /// <inheritdoc />
         public void Process(TContextModel context)
         {
-            foreach (var strategy in _strategies)
-            {
-                strategy.Process(context);
+            var currentState = context.State;
+            while (_strategies.ContainsKey(currentState)) {
+
+                var item = _strategies[context.State];
+                item.strategy.Process(context);
+                context.State = item.nextState;
+
+                if (currentState.Equals(context.State))
+                {
+                    throw new SmLoopingStrategyStatesException<TContextModel, TStrategyState>(context);
+                }
+
+                currentState = context.State;
             }
         }
 
+        /// <inheritdoc />
         public async Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default)
         {
-            foreach (var strategy in _strategies)
+            while (_strategies.ContainsKey(context.State))
             {
-                await strategy.ProcessAsync(context);
+                var item = _strategies[context.State];
+                await item.strategy.ProcessAsync(context);
+                context.State = item.nextState;
             }
         }
     }

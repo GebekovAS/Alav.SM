@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alav.SM.Interfaces
@@ -7,15 +8,16 @@ namespace Alav.SM.Interfaces
     /// Chain of Responsibility
     /// </summary>
     /// <typeparam name="TContextModel">Saga model</typeparam>
-    public interface ISmStrategyHandler<TContextModel>
-        where TContextModel: class
+    public interface ISmStrategyHandler<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <summary>
         /// Set successor strategy
         /// </summary>
         /// <param name="strategy">Successor strategy</param>
         /// <returns></returns>
-        ISmStrategy<TContextModel> SetSuccessorStrategy(ISmStrategy<TContextModel> strategy);
+        ISmStrategy<TContextModel, TStrategyState> SetSuccessorStrategy(ISmStrategy<TContextModel, TStrategyState> strategy);
 
         void Handle(TContextModel context);
 

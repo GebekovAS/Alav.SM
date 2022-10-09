@@ -1,17 +1,41 @@
-﻿using System.Threading;
+﻿using Alav.DI.Attributes;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alav.SM.Interfaces
 {
-    public interface ISmStrategyContext<TContextModel>
-        where TContextModel : class
+    /// <summary>
+    /// Strategy context
+    /// </summary>
+    /// <typeparam name="TContextModel">Strategy data contex type</typeparam>
+    public interface ISmStrategyContext<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
+        /// <summary>
+        /// Get builder
+        /// </summary>
+        /// <param name="context">Strategy data context</param>
+        ISmStrategyBuilder<TContextModel, TStrategyState> GetBuilder(TContextModel context);
+        /// <summary>
+        /// Configurate builder
+        /// </summary>
+        /// <param name="context">Strategy data context</param>
+        ISmStrategyContext<TContextModel, TStrategyState> Configurate(TContextModel context);
 
-        ISmStrategyContext<TContextModel> Configurate(TContextModel context);
-
+        /// <summary>
+        /// Process strategies
+        /// </summary>
+        /// <param name="context">Strategy data context</param>
         void Process(TContextModel context);
 
+        /// <summary>
+        /// Process strategies
+        /// </summary>
+        /// <param name="context">Strategy data context</param>
+        /// <param name="cancellationToken">Cancellation token</param>
         Task ProcessAsync(TContextModel context, CancellationToken cancellationToken);
     }
 }

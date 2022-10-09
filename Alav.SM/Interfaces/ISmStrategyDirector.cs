@@ -1,8 +1,21 @@
-﻿namespace Alav.SM.Interfaces
+﻿using Alav.DI.Attributes;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+
+namespace Alav.SM.Interfaces
 {
-    public interface ISmStrategyDirector<TContextModel>
-        where TContextModel: class
+    /// <summary>
+    /// Builder director
+    /// </summary>
+    /// <typeparam name="TContextModel"></typeparam>
+    public interface ISmStrategyDirector<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        ISmStrategyBuilder<TContextModel> Construct(ISmStrategyBuilder<TContextModel> builder);
+        /// <summary>
+        /// Construct builder
+        /// </summary>
+        /// <param name="builder">builder</param>
+        ISmStrategyBuilder<TContextModel, TStrategyState> Construct(ISmStrategyBuilder<TContextModel, TStrategyState> builder);
     }
 }

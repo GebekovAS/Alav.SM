@@ -1,11 +1,15 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Alav.SM
 {
-    public abstract class SmBaseStrategyBuilder<TContextModel> : ISmStrategyBuilder<TContextModel>
-        where TContextModel: class
+    /// <inheritdoc />
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
+    public abstract class SmBaseStrategyBuilder<TContextModel, TStrategyState> : ISmStrategyBuilder<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -14,18 +18,21 @@ namespace Alav.SM
             _serviceProvider = serviceProvider;
         }
 
-        protected ISmCompositeStrategy<TContextModel> RootStrategy;
+        protected ISmCompositeStrategy<TContextModel, TStrategyState> RootStrategy;
 
-        public ISmStrategyBuilder<TContextModel> BuildRootStrategy() 
+        /// <inheritdoc />
+        public ISmStrategyBuilder<TContextModel, TStrategyState> BuildRootStrategy() 
         {
-            RootStrategy = _serviceProvider.GetRequiredService<ISmCompositeStrategy<TContextModel>>();
+            RootStrategy = _serviceProvider.GetRequiredService<SmCompositeStrategy<TContextModel, TStrategyState>>();
 
             return this;
         }
 
-        public abstract ISmStrategyBuilder<TContextModel> BuildSubStrategies();
+        /// <inheritdoc />
+        public abstract ISmStrategyBuilder<TContextModel, TStrategyState> BuildSubStrategies();
 
-        public virtual ISmStrategy<TContextModel> GetResult()
+        /// <inheritdoc />
+        public virtual ISmStrategy<TContextModel, TStrategyState> GetResult()
         {
             return RootStrategy;
         }

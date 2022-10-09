@@ -1,8 +1,21 @@
-﻿namespace Alav.SM.Interfaces
+﻿using Alav.DI.Attributes;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+
+namespace Alav.SM.Interfaces
 {
-    public interface ISmStrategyContextFactory<TContextModel>
-        where TContextModel: class
+    /// <summary>
+    /// Strategy context factory
+    /// </summary>
+    /// <typeparam name="TContextModel"></typeparam>
+    public interface ISmStrategyContextFactory<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        ISmStrategyContext<TContextModel> GetContext(TContextModel context);
+        /// <summary>
+        /// Get context for the strategy context data
+        /// </summary>
+        /// <param name="context">Strategy data context</param>
+        ISmStrategyContext<TContextModel, TStrategyState> GetContext(TContextModel context);
     }
 }

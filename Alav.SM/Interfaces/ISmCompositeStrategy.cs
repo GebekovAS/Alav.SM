@@ -1,15 +1,26 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Alav.SM.Interfaces
 {
-    public interface ISmCompositeStrategy<TContextModel> : ISmStrategy<TContextModel>
-        where TContextModel: class
+    /// <summary>
+    /// Composite strategy
+    /// </summary>
+    /// <typeparam name="TContextModel"></typeparam>
+    public interface ISmCompositeStrategy<TContextModel, TStrategyState> : ISmStrategy<TContextModel, TStrategyState>
+        where TStrategyState : Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>()
-            where TStrategy: ISmStrategy<TContextModel>;
+        /// <summary>
+        /// Add strategy to chain
+        /// </summary>
+        /// <typeparam name="TStrategy">Strategy</typeparam>
+        ISmCompositeStrategy<TContextModel, TStrategyState> AddStrategy<TStrategy>(TStrategyState state, TStrategyState nextState)
+            where TStrategy: ISmStrategy<TContextModel, TStrategyState>;
 
-        ISmCompositeStrategy<TContextModel> RemoveStrategy<TStrategy>()
-            where TStrategy : ISmStrategy<TContextModel>;
+        /// <summary>
+        /// Remove strategy
+        /// </summary>
+        /// <typeparam name="TStrategy">Strategy</typeparam>
+        ISmCompositeStrategy<TContextModel, TStrategyState> Remove(TStrategyState state);
     }
 }

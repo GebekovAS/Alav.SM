@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alav.SM.Interfaces
@@ -7,7 +8,9 @@ namespace Alav.SM.Interfaces
     /// Strategy
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmStrategy<TContextModel> where TContextModel: class
+    public interface ISmStrategy<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <summary>
         /// Process strategy

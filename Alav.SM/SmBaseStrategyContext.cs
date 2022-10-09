@@ -1,29 +1,36 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alav.SM
 {
-    public abstract class SmBaseStrategyContext<TContextModel> : ISmStrategyContext<TContextModel>
-        where TContextModel: class
+    /// <inheritdoc />
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
+    public abstract class SmBaseStrategyContext<TContextModel, TStrategyState> : ISmStrategyContext<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        private readonly ISmStrategyDirector<TContextModel> _director;
+        private readonly ISmStrategyDirector<TContextModel, TStrategyState> _director;
 
-        private ISmStrategy<TContextModel> _strategy;
+        private ISmStrategy<TContextModel, TStrategyState> _strategy;
 
         protected readonly IServiceProvider ServiceProvider;
 
-        public SmBaseStrategyContext(ISmStrategyDirector<TContextModel> director,
+        public SmBaseStrategyContext(ISmStrategyDirector<TContextModel, TStrategyState> director,
             IServiceProvider serviceProvider)
         {
             _director = director;
             ServiceProvider = serviceProvider;
         }
 
-        public abstract ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
+        /// <inheritdoc />
+        public abstract ISmStrategyBuilder<TContextModel, TStrategyState> GetBuilder(TContextModel context);
 
-        public ISmStrategyContext<TContextModel> Configurate(TContextModel context)
+        /// <inheritdoc />
+        public ISmStrategyContext<TContextModel, TStrategyState> Configurate(TContextModel context)
         {
             if (_strategy != null)
             {
@@ -37,11 +44,13 @@ namespace Alav.SM
             return this;
         }
 
+        /// <inheritdoc />
         public virtual void Process(TContextModel context)
         {
             _strategy.Process(context);
         }
 
+        /// <inheritdoc />
         public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken)
         {
             return _strategy.ProcessAsync(context, cancellationToken);
