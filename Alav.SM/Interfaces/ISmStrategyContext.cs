@@ -36,6 +36,6 @@ namespace Alav.SM.Interfaces
         /// </summary>
         /// <param name="context">Strategy data context</param>
         /// <param name="cancellationToken">Cancellation token</param>
-        Task ProcessAsync(TContextModel context, CancellationToken cancellationToken);
+        Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default);
     }
 }

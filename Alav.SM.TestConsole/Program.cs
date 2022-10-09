@@ -36,7 +36,7 @@ namespace Alav.SM.TestConsole
             strategyContextFactory
                     .GetContext(saga)
                     .Configurate(saga)
-                    .Process(saga);
+                    .ProcessAsync(saga);
 
             Console.WriteLine("End");
             Console.ReadKey();

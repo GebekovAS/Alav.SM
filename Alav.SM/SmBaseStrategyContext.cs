@@ -51,7 +51,7 @@ namespace Alav.SM
         }
 
         /// <inheritdoc />
-        public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken)
+        public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default)
         {
             return _strategy.ProcessAsync(context, cancellationToken);
         }

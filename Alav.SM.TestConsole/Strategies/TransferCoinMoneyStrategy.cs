@@ -12,14 +12,9 @@ namespace Alav.SM.TestConsole.Strategies
 {
     public class TransferCoinMoneyStrategy : SmBaseStrategy<SagaModel, SagaStateEnum>
     {
-        public override void Process(SagaModel context)
+        public override Task ProcessAsync(SagaModel context, CancellationToken cancellationToken = default)
         {
             Console.WriteLine($"{nameof(TransferCoinMoneyStrategy)}: {nameof(ProcessAsync)}: {context.State}");
-        }
-
-        public override Task ProcessAsync(SagaModel model, CancellationToken cancellationToken = default)
-        {
-            Process(model);
 
             return Task.CompletedTask;
         }
