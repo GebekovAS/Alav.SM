@@ -1,9 +1,11 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace Alav.SM
 {
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public abstract class SmBaseStrategyBuilder<TContextModel> : ISmStrategyBuilder<TContextModel>
         where TContextModel: class
     {
@@ -18,7 +20,7 @@ namespace Alav.SM
 
         public ISmStrategyBuilder<TContextModel> BuildRootStrategy() 
         {
-            RootStrategy = _serviceProvider.GetRequiredService<ISmCompositeStrategy<TContextModel>>();
+            RootStrategy = _serviceProvider.GetRequiredService<SmCompositeStrategy<TContextModel>>();
 
             return this;
         }

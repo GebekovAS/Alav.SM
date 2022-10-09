@@ -14,8 +14,8 @@ namespace Alav.SM.TestConsole
             Console.WriteLine("Start");
 
             var services = new ServiceCollection()
-                            .AddAlavSM<SagaModel>()
-                            .Scan<Program>()
+                            //.AddAlavSM<SagaModel>() //If not used Alav.DI
+                            .Scan()
                             .BuildServiceProvider();
 
             var strategyContextFactory = services.GetService<StrategyContextFactory>();

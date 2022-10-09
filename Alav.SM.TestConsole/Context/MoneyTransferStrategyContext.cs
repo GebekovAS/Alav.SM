@@ -9,11 +9,9 @@ using System.Text;
 
 namespace Alav.SM.TestConsole.Context
 {
-
-    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public class MoneyTransferStrategyContext : SmBaseStrategyContext<SagaModel>
     {
-        public MoneyTransferStrategyContext(ISmStrategyDirector<SagaModel> director, IServiceProvider serviceProvider) : base(director, serviceProvider)
+        public MoneyTransferStrategyContext(SmDirector<SagaModel> director, IServiceProvider serviceProvider) : base(director, serviceProvider)
         { }
 
         public override ISmStrategyBuilder<SagaModel> GetBuilder(SagaModel context)

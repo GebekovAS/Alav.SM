@@ -1,7 +1,10 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Alav.SM
 {
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Singleton)]
     public class SmDirector<TContextModel> : ISmStrategyDirector<TContextModel>
         where TContextModel: class
     {

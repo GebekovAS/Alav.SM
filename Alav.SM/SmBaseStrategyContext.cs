@@ -1,10 +1,14 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alav.SM
 {
+
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public abstract class SmBaseStrategyContext<TContextModel> : ISmStrategyContext<TContextModel>
         where TContextModel: class
     {

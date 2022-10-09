@@ -1,4 +1,5 @@
-﻿using Alav.SM.Interfaces;
+﻿using Alav.DI.Attributes;
+using Alav.SM.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Alav.SM
 {
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public class SmCompositeStrategy<TContextModel> : ISmCompositeStrategy<TContextModel>
         where TContextModel: class
     {

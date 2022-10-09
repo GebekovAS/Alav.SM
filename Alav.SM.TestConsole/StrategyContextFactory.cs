@@ -11,7 +11,6 @@ using System.Threading;
 
 namespace Alav.SM.TestConsole
 {
-    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Singleton)]
     public class StrategyContextFactory : SmBaseStrategyContextFactory<SagaModel>
     {
         private readonly IServiceProvider _serviceProvider;

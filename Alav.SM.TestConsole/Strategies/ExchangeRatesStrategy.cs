@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Alav.SM.TestConsole.Strategies
 {
-    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public class ExchangeRatesStrategy: SmBaseStrategy<SagaModel>
     {
         public override void Process(SagaModel model)

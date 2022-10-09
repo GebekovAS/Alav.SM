@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Alav.SM.TestConsole.Strategies
 {
-    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public class TransferMoneyStrategy : SmBaseStrategy<SagaModel>
     {
         public override void Process(SagaModel model)
