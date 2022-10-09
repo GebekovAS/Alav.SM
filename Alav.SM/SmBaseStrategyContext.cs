@@ -9,16 +9,17 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
-    public abstract class SmBaseStrategyContext<TContextModel> : ISmStrategyContext<TContextModel>
-        where TContextModel: class
+    public abstract class SmBaseStrategyContext<TContextModel, TStrategyState> : ISmStrategyContext<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        private readonly ISmStrategyDirector<TContextModel> _director;
+        private readonly ISmStrategyDirector<TContextModel, TStrategyState> _director;
 
-        private ISmStrategy<TContextModel> _strategy;
+        private ISmStrategy<TContextModel, TStrategyState> _strategy;
 
         protected readonly IServiceProvider ServiceProvider;
 
-        public SmBaseStrategyContext(ISmStrategyDirector<TContextModel> director,
+        public SmBaseStrategyContext(ISmStrategyDirector<TContextModel, TStrategyState> director,
             IServiceProvider serviceProvider)
         {
             _director = director;
@@ -26,10 +27,10 @@ namespace Alav.SM
         }
 
         /// <inheritdoc />
-        public abstract ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
+        public abstract ISmStrategyBuilder<TContextModel, TStrategyState> GetBuilder(TContextModel context);
 
         /// <inheritdoc />
-        public ISmStrategyContext<TContextModel> Configurate(TContextModel context)
+        public ISmStrategyContext<TContextModel, TStrategyState> Configurate(TContextModel context)
         {
             if (_strategy != null)
             {

@@ -1,5 +1,6 @@
 ﻿using Alav.DI.Attributes;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Alav.SM.Interfaces
 {
@@ -7,23 +8,24 @@ namespace Alav.SM.Interfaces
     /// Strategy builder
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmStrategyBuilder<TContextModel>
-        where TContextModel: class
+    public interface ISmStrategyBuilder<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <summary>
         /// Build root (composite) strategy 
         /// </summary>
         /// <returns></returns>
-        ISmStrategyBuilder<TContextModel> BuildRootStrategy();
+        ISmStrategyBuilder<TContextModel, TStrategyState> BuildRootStrategy();
 
         /// <summary>
         /// Build sub strategies
         /// </summary>
-        ISmStrategyBuilder<TContextModel> BuildSubStrategies();
+        ISmStrategyBuilder<TContextModel, TStrategyState> BuildSubStrategies();
 
         /// <summary>
         /// Get result strategy (composite)
         /// </summary>
-        ISmStrategy<TContextModel> GetResult();
+        ISmStrategy<TContextModel, TStrategyState> GetResult();
     }
 }

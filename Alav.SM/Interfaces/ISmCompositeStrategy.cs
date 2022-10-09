@@ -1,7 +1,4 @@
-﻿using Alav.DI.Attributes;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Alav.SM.Interfaces
 {
@@ -9,21 +6,21 @@ namespace Alav.SM.Interfaces
     /// Composite strategy
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmCompositeStrategy<TContextModel> : ISmStrategy<TContextModel>
-        where TContextModel: class
+    public interface ISmCompositeStrategy<TContextModel, TStrategyState> : ISmStrategy<TContextModel, TStrategyState>
+        where TStrategyState : Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <summary>
         /// Add strategy to chain
         /// </summary>
         /// <typeparam name="TStrategy">Strategy</typeparam>
-        ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>()
-            where TStrategy: ISmStrategy<TContextModel>;
+        ISmCompositeStrategy<TContextModel, TStrategyState> AddStrategy<TStrategy>(TStrategyState state, TStrategyState nextState)
+            where TStrategy: ISmStrategy<TContextModel, TStrategyState>;
 
         /// <summary>
         /// Remove strategy
         /// </summary>
         /// <typeparam name="TStrategy">Strategy</typeparam>
-        ISmCompositeStrategy<TContextModel> RemoveStrategy<TStrategy>()
-            where TStrategy : ISmStrategy<TContextModel>;
+        ISmCompositeStrategy<TContextModel, TStrategyState> Remove(TStrategyState state);
     }
 }

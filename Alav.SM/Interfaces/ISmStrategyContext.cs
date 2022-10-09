@@ -1,5 +1,6 @@
 ﻿using Alav.DI.Attributes;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,19 +10,20 @@ namespace Alav.SM.Interfaces
     /// Strategy context
     /// </summary>
     /// <typeparam name="TContextModel">Strategy data contex type</typeparam>
-    public interface ISmStrategyContext<TContextModel>
-        where TContextModel : class
+    public interface ISmStrategyContext<TContextModel, TStrategyState>
+        where TStrategyState: Enum
+        where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <summary>
         /// Get builder
         /// </summary>
         /// <param name="context">Strategy data context</param>
-        ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
+        ISmStrategyBuilder<TContextModel, TStrategyState> GetBuilder(TContextModel context);
         /// <summary>
         /// Configurate builder
         /// </summary>
         /// <param name="context">Strategy data context</param>
-        ISmStrategyContext<TContextModel> Configurate(TContextModel context);
+        ISmStrategyContext<TContextModel, TStrategyState> Configurate(TContextModel context);
 
         /// <summary>
         /// Process strategies

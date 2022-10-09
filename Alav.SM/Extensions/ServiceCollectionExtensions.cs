@@ -1,5 +1,6 @@
 ﻿using Alav.SM.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Alav.SM.Extensions
 {
@@ -13,12 +14,13 @@ namespace Alav.SM.Extensions
         /// </summary>
         /// <typeparam name="TContextModel"></typeparam>
         /// <param name="services">DI service collection</param>
-        public static IServiceCollection AddAlavSM<TContextModel>(this IServiceCollection services)
-            where TContextModel: class
+        public static IServiceCollection AddAlavSM<TContextModel, TStrategyState>(this IServiceCollection services)
+            where TStrategyState: Enum
+            where TContextModel: IStrategyContextModel<TStrategyState>
         {
             return services
-                .AddSingleton<ISmStrategyDirector<TContextModel>, SmDirector<TContextModel>>()
-                .AddSingleton<ISmCompositeStrategy<TContextModel>, SmCompositeStrategy<TContextModel>>();
+                .AddSingleton<ISmStrategyDirector<TContextModel, TStrategyState>, SmDirector<TContextModel, TStrategyState>>()
+                .AddSingleton<ISmCompositeStrategy<TContextModel, TStrategyState>, SmCompositeStrategy<TContextModel, TStrategyState>>();
         }
     }
 }

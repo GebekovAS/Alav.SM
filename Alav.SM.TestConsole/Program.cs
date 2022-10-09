@@ -16,15 +16,16 @@ namespace Alav.SM.TestConsole
             Console.WriteLine("Start");
 
             var services = new ServiceCollection()
-                            //.AddAlavSM<SagaModel>() //If not used Alav.DI
+                            //.AddAlavSM<SagaModel>() //If not used Alav.DI scan
                             .Scan()
                             .BuildServiceProvider();
 
             var strategyContextFactory = services.GetService<StrategyContextFactory>();
             var saga = new SagaModel()
             {
-                SagaType = Enums.SagaTypeEnum.TransferMoney,
+                CorrelationId = Guid.NewGuid(),
                 State = Enums.SagaStateEnum.New,
+                SagaType = Enums.SagaTypeEnum.TransferMoney,
                 Object = JsonSerializer.Serialize(new SagaObjectModel
                 {
                     CurrencyCode = "BTC",

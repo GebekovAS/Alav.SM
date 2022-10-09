@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Alav.SM.TestConsole
 {
-    public class StrategyContextFactory : SmBaseStrategyContextFactory<SagaModel>
+    public class StrategyContextFactory : SmBaseStrategyContextFactory<SagaModel, SagaStateEnum>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -21,7 +21,7 @@ namespace Alav.SM.TestConsole
             _serviceProvider = serviceProvider;
         }
 
-        public override ISmStrategyContext<SagaModel> GetContext(SagaModel context)
+        public override ISmStrategyContext<SagaModel, SagaStateEnum> GetContext(SagaModel context)
         {
             return context.SagaType switch {
                 SagaTypeEnum.TransferMoney => _serviceProvider.GetRequiredService<MoneyTransferStrategyContext>(),
