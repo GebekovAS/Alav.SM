@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace Alav.SM.TestConsole.Context
 {
@@ -16,7 +17,12 @@ namespace Alav.SM.TestConsole.Context
 
         public override ISmStrategyBuilder<SagaModel> GetBuilder(SagaModel context)
         {
-            return ServiceProvider.GetRequiredService<MoneyTransferBuilder>();
+            var sagaObject = JsonSerializer.Deserialize<SagaObjectModel>(context.Object);
+
+            return sagaObject.CurrencyTypeCode switch {
+                "COIN" => ServiceProvider.GetRequiredService<CoinMoneyTransferBuilder>(),
+                _ => throw new NotImplementedException(sagaObject.CurrencyTypeCode)
+                };
         }
     }
 }

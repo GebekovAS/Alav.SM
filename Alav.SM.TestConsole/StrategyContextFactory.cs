@@ -2,6 +2,7 @@
 using Alav.SM.Interfaces;
 using Alav.SM.TestConsole.Builders;
 using Alav.SM.TestConsole.Context;
+using Alav.SM.TestConsole.Enums;
 using Alav.SM.TestConsole.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -22,7 +23,10 @@ namespace Alav.SM.TestConsole
 
         public override ISmStrategyContext<SagaModel> GetContext(SagaModel context)
         {
-            return _serviceProvider.GetRequiredService<MoneyTransferStrategyContext>();
+            return context.SagaType switch {
+                SagaTypeEnum.TransferMoney => _serviceProvider.GetRequiredService<MoneyTransferStrategyContext>(),
+                _ => throw new NotImplementedException(context.SagaType.ToString())
+            };
         }
     }
 }

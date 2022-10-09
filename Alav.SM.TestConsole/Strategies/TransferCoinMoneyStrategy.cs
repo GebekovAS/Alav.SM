@@ -9,11 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Alav.SM.TestConsole.Strategies
 {
-    public class TransferMoneyStrategy : SmBaseStrategy<SagaModel>
+    public class TransferCoinMoneyStrategy : SmBaseStrategy<SagaModel>
     {
         public override void Process(SagaModel model)
         {
-            Console.WriteLine($"{nameof(TransferMoneyStrategy)}:{nameof(ProcessAsync)}");
+            Console.WriteLine($"{nameof(TransferCoinMoneyStrategy)}:{nameof(ProcessAsync)}");
         }
 
         public override Task ProcessAsync(SagaModel model, CancellationToken cancellationToken = default)

@@ -6,16 +6,16 @@ using System;
 
 namespace Alav.SM.TestConsole.Builders
 {
-    public class MoneyTransferBuilder : SmBaseStrategyBuilder<SagaModel>
+    public class CoinMoneyTransferBuilder : SmBaseStrategyBuilder<SagaModel>
     {
-        public MoneyTransferBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
+        public CoinMoneyTransferBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
 
         public override ISmStrategyBuilder<SagaModel> BuildSubStrategies()
         {
             RootStrategy
-                .AddStrategy<ExchangeRatesStrategy>()
-                .AddStrategy<TransferMoneyStrategy>();
+                .AddStrategy<ExchangeCoinRatesStrategy>()
+                .AddStrategy<TransferCoinMoneyStrategy>();
             return this;
         }
     }

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Alav.SM.TestConsole.Strategies
 {
-    public class ExchangeRatesStrategy: SmBaseStrategy<SagaModel>
+    public class ExchangeCoinRatesStrategy: SmBaseStrategy<SagaModel>
     {
         public override void Process(SagaModel model)
         {
-            Console.WriteLine($"{nameof(ExchangeRatesStrategy)}:{nameof(ProcessAsync)}");
+            Console.WriteLine($"{nameof(ExchangeCoinRatesStrategy)}:{nameof(ProcessAsync)}");
         }
 
         public override Task ProcessAsync(SagaModel model, CancellationToken cancellationToken = default)
