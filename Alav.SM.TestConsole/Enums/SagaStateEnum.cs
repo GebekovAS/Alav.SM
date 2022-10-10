@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Alav.SM.TestConsole.Enums
+﻿namespace Alav.SM.TestConsole.Enums
 {
     public enum SagaStateEnum
     {

@@ -1,18 +1,14 @@
-﻿using Alav.DI.Attributes;
-using Alav.SM.Interfaces;
-using Alav.SM.TestConsole.Builders;
+﻿using Alav.SM.Interfaces;
 using Alav.SM.TestConsole.Context;
 using Alav.SM.TestConsole.Enums;
 using Alav.SM.TestConsole.Models;
+using Alav.SM.TestConsole.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
 
 namespace Alav.SM.TestConsole
 {
-    public class StrategyContextFactory : SmBaseStrategyContextFactory<SagaModel, SagaStateEnum>
+    public class StrategyContextFactory : SmBaseStrategyContextFactory<SagaRepository, SagaModel, SagaStateEnum>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -21,7 +17,7 @@ namespace Alav.SM.TestConsole
             _serviceProvider = serviceProvider;
         }
 
-        public override ISmStrategyContext<SagaModel, SagaStateEnum> GetContext(SagaModel context)
+        public override ISmStrategyContext<SagaRepository, SagaModel, SagaStateEnum> GetContext(SagaModel context)
         {
             return context.SagaType switch {
                 SagaTypeEnum.TransferMoney => _serviceProvider.GetRequiredService<MoneyTransferStrategyContext>(),

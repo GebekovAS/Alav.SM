@@ -1,12 +1,8 @@
-﻿using Alav.SM.TestConsole.Models;
+﻿using Alav.SM.TestConsole.Enums;
+using Alav.SM.TestConsole.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
-using Alav.DI.Attributes;
-using Microsoft.Extensions.DependencyInjection;
-using Alav.SM.TestConsole.Enums;
+using System.Threading.Tasks;
 
 namespace Alav.SM.TestConsole.Strategies
 {

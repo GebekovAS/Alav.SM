@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Alav.SM.TestConsole.Models
+﻿namespace Alav.SM.TestConsole.Models
 {
     public class SagaObjectModel
     {

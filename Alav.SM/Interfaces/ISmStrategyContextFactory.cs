@@ -8,7 +8,8 @@ namespace Alav.SM.Interfaces
     /// Strategy context factory
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmStrategyContextFactory<TContextModel, TStrategyState>
+    public interface ISmStrategyContextFactory<TRepository, TContextModel, TStrategyState>
+        where TRepository : SmBaseRepository<TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
@@ -16,6 +17,6 @@ namespace Alav.SM.Interfaces
         /// Get context for the strategy context data
         /// </summary>
         /// <param name="context">Strategy data context</param>
-        ISmStrategyContext<TContextModel, TStrategyState> GetContext(TContextModel context);
+        ISmStrategyContext<TRepository, TContextModel, TStrategyState> GetContext(TContextModel context);
     }
 }

@@ -6,12 +6,13 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Singleton)]
-    public class SmDirector<TContextModel, TStrategyState> : ISmStrategyDirector<TContextModel, TStrategyState>
+    public class SmDirector<TRepository, TContextModel, TStrategyState> : ISmStrategyDirector<TRepository, TContextModel, TStrategyState>
+        where TRepository : SmBaseRepository<TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <inheritdoc />
-        public ISmStrategyBuilder<TContextModel, TStrategyState> Construct(ISmStrategyBuilder<TContextModel, TStrategyState> builder)
+        public ISmStrategyBuilder<TRepository, TContextModel, TStrategyState> Construct(ISmStrategyBuilder<TRepository, TContextModel, TStrategyState> builder)
         {
             return builder
                 .BuildRootStrategy()
