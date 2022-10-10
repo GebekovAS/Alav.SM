@@ -16,12 +16,6 @@ namespace Alav.SM.Interfaces
         /// Process strategy
         /// </summary>
         /// <param name="context">Saga model</param>
-        void Process(TContextModel context);
-
-        /// <summary>
-        /// Process strategy
-        /// </summary>
-        /// <param name="context">Saga model</param>
         /// <param name="cancellationToken">Cancellation token</param>
         Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default);
     }

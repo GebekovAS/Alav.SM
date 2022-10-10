@@ -19,8 +19,6 @@ namespace Alav.SM.Interfaces
         /// <returns></returns>
         ISmStrategy<TContextModel, TStrategyState> SetSuccessorStrategy(ISmStrategy<TContextModel, TStrategyState> strategy);
 
-        void Handle(TContextModel context);
-
         Task HandleAsync(TContextModel context, CancellationToken cancellationToken = default);
 
     }

@@ -15,12 +15,6 @@ namespace Alav.SM
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <inheritdoc />
-        public virtual void Process(TContextModel context)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
         public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
