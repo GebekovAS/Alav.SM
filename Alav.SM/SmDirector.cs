@@ -14,8 +14,8 @@ namespace Alav.SM
         public ISmStrategyBuilder<TContextModel, TStrategyState> Construct(ISmStrategyBuilder<TContextModel, TStrategyState> builder)
         {
             return builder
-                .BuildRootStrategy()
-                .BuildSubStrategies();
+                .BuildCompositeStrategy()
+                .BuildStrategies();
         }
     }
 }

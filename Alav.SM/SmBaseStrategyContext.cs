@@ -19,6 +19,9 @@ namespace Alav.SM
 
         protected readonly IServiceProvider ServiceProvider;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public SmBaseStrategyContext(SmDirector<TContextModel, TStrategyState> director,
             SmUnitOfWork<TContextModel, TStrategyState> unitOfWork,
             IServiceProvider serviceProvider)

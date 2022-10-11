@@ -1,6 +1,5 @@
 ﻿using Alav.DI.Attributes;
 using Alav.SM.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,9 +14,6 @@ namespace Alav.SM
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
         /// <inheritdoc />
-        public virtual Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract Task ProcessAsync(TContextModel context, CancellationToken cancellationToken = default);
     }
 }

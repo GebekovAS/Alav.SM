@@ -13,6 +13,9 @@ namespace Alav.SM
     {
         private readonly IServiceProvider _serviceProvider;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public SmBaseStrategyBuilder(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -21,7 +24,7 @@ namespace Alav.SM
         protected ISmCompositeStrategy<TContextModel, TStrategyState> RootStrategy;
 
         /// <inheritdoc />
-        public ISmStrategyBuilder<TContextModel, TStrategyState> BuildRootStrategy() 
+        public ISmStrategyBuilder<TContextModel, TStrategyState> BuildCompositeStrategy() 
         {
             RootStrategy = _serviceProvider.GetRequiredService<SmCompositeStrategy<TContextModel, TStrategyState>>();
 
@@ -29,7 +32,7 @@ namespace Alav.SM
         }
 
         /// <inheritdoc />
-        public abstract ISmStrategyBuilder<TContextModel, TStrategyState> BuildSubStrategies();
+        public abstract ISmStrategyBuilder<TContextModel, TStrategyState> BuildStrategies();
 
         /// <inheritdoc />
         public virtual ISmStrategy<TContextModel, TStrategyState> GetResult()

@@ -16,12 +16,12 @@ namespace Alav.SM.Interfaces
         /// Build root (composite) strategy 
         /// </summary>
         /// <returns></returns>
-        ISmStrategyBuilder<TContextModel, TStrategyState> BuildRootStrategy();
+        ISmStrategyBuilder<TContextModel, TStrategyState> BuildCompositeStrategy();
 
         /// <summary>
         /// Build sub strategies
         /// </summary>
-        ISmStrategyBuilder<TContextModel, TStrategyState> BuildSubStrategies();
+        ISmStrategyBuilder<TContextModel, TStrategyState> BuildStrategies();
 
         /// <summary>
         /// Get result strategy (composite)

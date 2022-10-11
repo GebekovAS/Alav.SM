@@ -19,6 +19,9 @@ namespace Alav.SM
         private readonly IServiceProvider _serviceProvider;
         private readonly SmUnitOfWork<TContextModel, TStrategyState> _unitOfWork;
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
         public SmCompositeStrategy(IServiceProvider serviceProvider,
             SmUnitOfWork<TContextModel, TStrategyState> unitOfWork)
         {

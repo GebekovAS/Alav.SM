@@ -11,7 +11,7 @@ namespace Alav.SM.TestConsole.Builders
         public CoinMoneyTransferBuilder(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
 
-        public override ISmStrategyBuilder<SagaModel, SagaStateEnum> BuildSubStrategies()
+        public override ISmStrategyBuilder<SagaModel, SagaStateEnum> BuildStrategies()
         {
             RootStrategy
                 .AddStrategy<ExchangeCoinRatesStrategy>(state: SagaStateEnum.New, nextState: SagaStateEnum.InProcess)
