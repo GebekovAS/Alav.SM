@@ -9,29 +9,33 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
-    public abstract class SmBaseStrategyContext<TRepository, TContextModel, TStrategyState> : ISmStrategyContext<TRepository, TContextModel, TStrategyState>
-        where TRepository : SmBaseRepository<TStrategyState>
+    public abstract class SmBaseStrategyContext<TRepository, TContextModel, TStrategyState> : ISmStrategyContext<TContextModel, TStrategyState>
+        where TRepository : ISmRepository<TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
-        private readonly ISmStrategyDirector<TRepository, TContextModel, TStrategyState> _director;
+        private readonly ISmStrategyDirector<TContextModel, TStrategyState> _director;
 
         private ISmStrategy<TContextModel, TStrategyState> _strategy;
 
         protected readonly IServiceProvider ServiceProvider;
 
-        public SmBaseStrategyContext(ISmStrategyDirector<TRepository, TContextModel, TStrategyState> director,
+        public SmBaseStrategyContext(SmDirector<TContextModel, TStrategyState> director,
+            TRepository repository,
+            SmUnitOfWork<TContextModel, TStrategyState> unitOfWork,
             IServiceProvider serviceProvider)
         {
             _director = director;
             ServiceProvider = serviceProvider;
+
+            unitOfWork.Repository = repository;
         }
 
         /// <inheritdoc />
-        public abstract ISmStrategyBuilder<TRepository, TContextModel, TStrategyState> GetBuilder(TContextModel context);
+        public abstract ISmStrategyBuilder<TContextModel, TStrategyState> GetBuilder(TContextModel context);
 
         /// <inheritdoc />
-        public ISmStrategyContext<TRepository, TContextModel, TStrategyState> Configurate(TContextModel context)
+        public ISmStrategyContext<TContextModel, TStrategyState> Configurate(TContextModel context)
         {
             if (_strategy != null)
             {

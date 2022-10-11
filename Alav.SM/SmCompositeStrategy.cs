@@ -12,18 +12,18 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
-    public class SmCompositeStrategy<TRepository,TContextModel,TStrategyState> : ISmCompositeStrategy<TContextModel, TStrategyState>
-        where TRepository: SmBaseRepository<TStrategyState>
+    public class SmCompositeStrategy<TContextModel,TStrategyState> : ISmCompositeStrategy<TContextModel, TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly TRepository _repository;
+        private readonly SmUnitOfWork<TContextModel, TStrategyState> _unitOfWork;
 
-        public SmCompositeStrategy(IServiceProvider serviceProvider, TRepository repository)
+        public SmCompositeStrategy(IServiceProvider serviceProvider,
+            SmUnitOfWork<TContextModel, TStrategyState> unitOfWork)
         {
             _serviceProvider = serviceProvider;
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         private readonly Dictionary<TStrategyState, (ISmStrategy<TContextModel, TStrategyState> strategy, TStrategyState nextState)> _strategies = new Dictionary<TStrategyState, (ISmStrategy<TContextModel, TStrategyState> strategy, TStrategyState nextState)>();
@@ -61,7 +61,7 @@ namespace Alav.SM
                     throw new SmLoopingStrategyStatesException<TContextModel, TStrategyState>(context);
                 }
 
-                await _repository.SaveAsync(context, cancellationToken);
+                await _unitOfWork.Repository.SaveAsync(context, cancellationToken);
                 currentState = context.State;
             }
         }

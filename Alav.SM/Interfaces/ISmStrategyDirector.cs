@@ -8,8 +8,7 @@ namespace Alav.SM.Interfaces
     /// Builder director
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmStrategyDirector<TRepository, TContextModel, TStrategyState>
-        where TRepository : SmBaseRepository<TStrategyState>
+    public interface ISmStrategyDirector<TContextModel, TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
@@ -17,6 +16,6 @@ namespace Alav.SM.Interfaces
         /// Construct builder
         /// </summary>
         /// <param name="builder">builder</param>
-        ISmStrategyBuilder<TRepository, TContextModel, TStrategyState> Construct(ISmStrategyBuilder<TRepository, TContextModel, TStrategyState> builder);
+        ISmStrategyBuilder<TContextModel, TStrategyState> Construct(ISmStrategyBuilder<TContextModel, TStrategyState> builder);
     }
 }

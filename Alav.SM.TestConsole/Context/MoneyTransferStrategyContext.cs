@@ -11,10 +11,13 @@ namespace Alav.SM.TestConsole.Context
 {
     public class MoneyTransferStrategyContext : SmBaseStrategyContext<SagaRepository, SagaModel, SagaStateEnum>
     {
-        public MoneyTransferStrategyContext(SmDirector<SagaRepository, SagaModel, SagaStateEnum> director, IServiceProvider serviceProvider) : base(director, serviceProvider)
-        { }
+        public MoneyTransferStrategyContext(SmDirector<SagaModel, SagaStateEnum> director,
+            SagaRepository repository,
+            SmUnitOfWork<SagaModel, SagaStateEnum> unitOfWork,
+            IServiceProvider serviceProvider) : base(director, repository, unitOfWork, serviceProvider)
+        {}
 
-        public override ISmStrategyBuilder<SagaRepository, SagaModel, SagaStateEnum> GetBuilder(SagaModel context)
+        public override ISmStrategyBuilder<SagaModel, SagaStateEnum> GetBuilder(SagaModel context)
         {
             var sagaObject = JsonSerializer.Deserialize<SagaObjectModel>(context.Object);
 

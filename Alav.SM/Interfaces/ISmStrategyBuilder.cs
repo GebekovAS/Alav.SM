@@ -8,8 +8,7 @@ namespace Alav.SM.Interfaces
     /// Strategy builder
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmStrategyBuilder<TRepository, TContextModel, TStrategyState>
-        where TRepository : SmBaseRepository<TStrategyState>
+    public interface ISmStrategyBuilder<TContextModel, TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
@@ -17,12 +16,12 @@ namespace Alav.SM.Interfaces
         /// Build root (composite) strategy 
         /// </summary>
         /// <returns></returns>
-        ISmStrategyBuilder<TRepository, TContextModel, TStrategyState> BuildRootStrategy();
+        ISmStrategyBuilder<TContextModel, TStrategyState> BuildRootStrategy();
 
         /// <summary>
         /// Build sub strategies
         /// </summary>
-        ISmStrategyBuilder<TRepository, TContextModel, TStrategyState> BuildSubStrategies();
+        ISmStrategyBuilder<TContextModel, TStrategyState> BuildSubStrategies();
 
         /// <summary>
         /// Get result strategy (composite)
