@@ -21,10 +21,11 @@ namespace Alav.SM
         /// <summary>
         /// .ctor
         /// </summary>
-        public SmBaseStateMachine(TRepository repository, TStrategyContextFactory strategyContextFactory)
+        public SmBaseStateMachine(TRepository repository, TStrategyContextFactory strategyContextFactory, SmUnitOfWork<TContextModel, TStrategyState> unitOfWork)
         {
             _repository = repository;
             _strategyContextFactory = strategyContextFactory;
+            unitOfWork.Repository = repository;
         }
 
         /// <inheritdoc/>

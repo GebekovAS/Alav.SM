@@ -9,12 +9,11 @@ using System.Text.Json;
 
 namespace Alav.SM.TestConsole.Context
 {
-    public class MoneyTransferStrategyContext : SmBaseStrategyContext<SagaRepository, SagaModel, SagaStateEnum>
+    public class MoneyTransferStrategyContext : SmBaseStrategyContext<SagaModel, SagaStateEnum>
     {
         public MoneyTransferStrategyContext(SmDirector<SagaModel, SagaStateEnum> director,
-            SagaRepository repository,
             SmUnitOfWork<SagaModel, SagaStateEnum> unitOfWork,
-            IServiceProvider serviceProvider) : base(director, repository, unitOfWork, serviceProvider)
+            IServiceProvider serviceProvider) : base(director, unitOfWork, serviceProvider)
         {}
 
         public override ISmStrategyBuilder<SagaModel, SagaStateEnum> GetBuilder(SagaModel context)

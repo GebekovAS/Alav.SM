@@ -9,8 +9,7 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
-    public abstract class SmBaseStrategyContext<TRepository, TContextModel, TStrategyState> : ISmStrategyContext<TContextModel, TStrategyState>
-        where TRepository : ISmRepository<TContextModel,TStrategyState>
+    public abstract class SmBaseStrategyContext<TContextModel, TStrategyState> : ISmStrategyContext<TContextModel, TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {
@@ -21,14 +20,11 @@ namespace Alav.SM
         protected readonly IServiceProvider ServiceProvider;
 
         public SmBaseStrategyContext(SmDirector<TContextModel, TStrategyState> director,
-            TRepository repository,
             SmUnitOfWork<TContextModel, TStrategyState> unitOfWork,
             IServiceProvider serviceProvider)
         {
             _director = director;
             ServiceProvider = serviceProvider;
-
-            unitOfWork.Repository = repository;
         }
 
         /// <inheritdoc />

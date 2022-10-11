@@ -2,6 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Alav.SM</Title>
+    <Copyright>© Gebekov Alavutdin S., 2022</Copyright>
+    <Description>Alav.SM - tools for Implementing the State Machine</Description>
+    <PackageProjectUrl>https://github.com/GebekovAS/Alav.SM</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GebekovAS/Alav.SM</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>alav.sm,alav,statemachine</PackageTags>
+    <PackageReleaseNotes>Init</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
