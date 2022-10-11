@@ -8,7 +8,8 @@ namespace Alav.SM.Interfaces
     /// Base strategy repository
     /// </summary>
     /// <typeparam name="TStrategyState">Strategy state enum</typeparam>
-    public interface ISmRepository<TStrategyState>
+    public interface ISmRepository<TContextModel, TStrategyState>
+        where TContextModel : IStrategyContextModel<TStrategyState>
         where TStrategyState : Enum
     {
         /// <summary>
@@ -17,7 +18,7 @@ namespace Alav.SM.Interfaces
         /// <param name="correlationId"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<IStrategyContextModel<TStrategyState>> GetStrategyContextModelAsync(Guid correlationId, CancellationToken cancellationToken = default);
+        Task<TContextModel> GetStrategyContextModelAsync(Guid correlationId, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Save changes
@@ -25,6 +26,6 @@ namespace Alav.SM.Interfaces
         /// <param name="context"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task SaveAsync(IStrategyContextModel<TStrategyState> context, CancellationToken cancellationToken = default);
+        Task SaveAsync(TContextModel context, CancellationToken cancellationToken = default);
     }
 }

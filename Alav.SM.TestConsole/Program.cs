@@ -1,5 +1,7 @@
 ﻿using Alav.DI.Extensions;
+using Alav.SM.TestConsole.Enums;
 using Alav.SM.TestConsole.Models;
+using Alav.SM.TestConsole.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Text.Json;
@@ -16,23 +18,9 @@ namespace Alav.SM.TestConsole
                             .Scan()
                             .BuildServiceProvider();
 
-            var strategyContextFactory = services.GetService<StrategyContextFactory>();
-            var saga = new SagaModel()
-            {
-                CorrelationId = Guid.NewGuid(),
-                State = Enums.SagaStateEnum.New,
-                SagaType = Enums.SagaTypeEnum.TransferMoney,
-                Object = JsonSerializer.Serialize(new SagaObjectModel
-                {
-                    CurrencyCode = "BTC",
-                    CurrencyTypeCode = "COIN"
-                })
-            };
+            var stateMachine = services.GetService<SmBaseStateMachine<SagaRepository, StrategyContextFactory, SagaModel, SagaStateEnum>>();
 
-            strategyContextFactory
-                    .GetContext(saga)
-                    .Configurate(saga)
-                    .ProcessAsync(saga);
+            stateMachine.ProcessAsync(Guid.NewGuid());
 
             Console.WriteLine("End");
             Console.ReadKey();

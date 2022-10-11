@@ -10,7 +10,7 @@ namespace Alav.SM
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
     public abstract class SmBaseStrategyContext<TRepository, TContextModel, TStrategyState> : ISmStrategyContext<TContextModel, TStrategyState>
-        where TRepository : ISmRepository<TStrategyState>
+        where TRepository : ISmRepository<TContextModel,TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>
     {

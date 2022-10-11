@@ -6,7 +6,7 @@ using System;
 namespace Alav.SM
 {
     /// <inheritdoc />
-    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
+    [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Singleton)]
     public abstract class SmBaseStrategyContextFactory<TContextModel, TStrategyState> : ISmStrategyContextFactory<TContextModel, TStrategyState>
         where TStrategyState: Enum
         where TContextModel: IStrategyContextModel<TStrategyState>

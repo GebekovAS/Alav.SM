@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Alav.SM.TestConsole.Repositories
 {
-    public class SagaRepository : SmBaseRepository<SagaStateEnum>
+    public class SagaRepository : SmBaseRepository<SagaModel,SagaStateEnum>
     {
-        public override async Task<IStrategyContextModel<SagaStateEnum>> GetStrategyContextModelAsync(Guid correlationId, CancellationToken cancellationToken = default)
+        public override async Task<SagaModel> GetStrategyContextModelAsync(Guid correlationId, CancellationToken cancellationToken = default)
         {
             Console.WriteLine($"{nameof(GetStrategyContextModelAsync)}:{correlationId}");
 
             return new SagaModel {
-                CorrelationId = Guid.NewGuid(),
+                CorrelationId = correlationId,
                 State = Enums.SagaStateEnum.New,
                 SagaType = Enums.SagaTypeEnum.TransferMoney,
                 Object = JsonSerializer.Serialize(new SagaObjectModel
@@ -26,7 +26,7 @@ namespace Alav.SM.TestConsole.Repositories
             };
         }
 
-        public override Task SaveAsync(IStrategyContextModel<SagaStateEnum> context, CancellationToken cancellationToken = default)
+        public override Task SaveAsync(SagaModel context, CancellationToken cancellationToken = default)
         {
             Console.WriteLine($"{nameof(SaveAsync)}:{context.State}");
 

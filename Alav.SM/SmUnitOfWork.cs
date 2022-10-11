@@ -9,6 +9,6 @@ namespace Alav.SM
         where TStrategyState : Enum
         where TContextModel : IStrategyContextModel<TStrategyState>
     {
-        public ISmRepository<TStrategyState> Repository { get; set; }
+        public ISmRepository<TContextModel, TStrategyState> Repository { get; set; }
     }
 }
