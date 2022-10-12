@@ -18,7 +18,8 @@ namespace Alav.SM.TestConsole.Context
         {
             var sagaObject = JsonSerializer.Deserialize<SagaObjectModel>(context.Object);
 
-            return sagaObject.CurrencyTypeCode switch {
+            return sagaObject.CurrencyTypeCode switch
+            {
                 "COIN" => ServiceProvider.GetRequiredService<CoinTransferBuilder>(),
                 _ => throw new NotImplementedException(sagaObject.CurrencyTypeCode)
             };
