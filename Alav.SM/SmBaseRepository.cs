@@ -8,9 +8,8 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Singleton)]
-    public abstract class SmBaseRepository<TContextModel, TStrategyState> : ISmRepository<TContextModel, TStrategyState>
-        where TContextModel : IStrategyContextModel<TStrategyState>
-        where TStrategyState : Enum
+    public abstract class SmBaseRepository<TContextModel> : ISmRepository<TContextModel>
+        where TContextModel : IStrategyContextModel
     {
         /// <inheritdoc />
         public abstract Task<TContextModel> GetStrategyContextModelAsync(Guid correlationId, CancellationToken cancellationToken = default);

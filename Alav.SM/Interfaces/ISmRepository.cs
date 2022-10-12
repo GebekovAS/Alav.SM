@@ -7,10 +7,8 @@ namespace Alav.SM.Interfaces
     /// <summary>
     /// Base strategy repository
     /// </summary>
-    /// <typeparam name="TStrategyState">Strategy state enum</typeparam>
-    public interface ISmRepository<TContextModel, TStrategyState>
-        where TContextModel : IStrategyContextModel<TStrategyState>
-        where TStrategyState : Enum
+    public interface ISmRepository<TContextModel>
+        where TContextModel : IStrategyContextModel
     {
         /// <summary>
         /// Get strategy context model

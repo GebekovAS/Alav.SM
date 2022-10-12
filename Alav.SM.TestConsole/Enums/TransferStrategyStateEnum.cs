@@ -1,9 +1,9 @@
 ﻿namespace Alav.SM.TestConsole.Enums
 {
-    public enum SagaStateEnum
+    public enum TransferStrategyStateEnum
     {
         New = 0,
-        InProcess = 1,
+        ExchangedCoinRates = 1,
         Completed = 2,
         Error = 3
     }

@@ -6,21 +6,19 @@ namespace Alav.SM.Interfaces
     /// Composite strategy
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmCompositeStrategy<TContextModel, TStrategyState> : ISmStrategy<TContextModel, TStrategyState>
-        where TStrategyState : Enum
-        where TContextModel: IStrategyContextModel<TStrategyState>
+    public interface ISmCompositeStrategy<TContextModel> : ISmStrategy<TContextModel>
+        where TContextModel: IStrategyContextModel
     {
         /// <summary>
         /// Add strategy to chain
         /// </summary>
         /// <typeparam name="TStrategy">Strategy</typeparam>
-        ISmCompositeStrategy<TContextModel, TStrategyState> AddStrategy<TStrategy>(TStrategyState state, TStrategyState nextState)
-            where TStrategy: ISmStrategy<TContextModel, TStrategyState>;
+        ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>(int state, int nextState)
+            where TStrategy: ISmStrategy<TContextModel>;
 
         /// <summary>
         /// Remove strategy
         /// </summary>
-        /// <typeparam name="TStrategy">Strategy</typeparam>
-        ISmCompositeStrategy<TContextModel, TStrategyState> Remove(TStrategyState state);
+        ISmCompositeStrategy<TContextModel> Remove(int state);
     }
 }

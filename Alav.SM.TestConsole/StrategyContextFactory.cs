@@ -7,7 +7,7 @@ using System;
 
 namespace Alav.SM.TestConsole
 {
-    public class StrategyContextFactory : SmBaseStrategyContextFactory<SagaModel, SagaStateEnum>
+    public class StrategyContextFactory : SmBaseStrategyContextFactory<SagaModel>
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -16,10 +16,11 @@ namespace Alav.SM.TestConsole
             _serviceProvider = serviceProvider;
         }
 
-        public override ISmStrategyContext<SagaModel, SagaStateEnum> GetContext(SagaModel context)
+        public override ISmStrategyContext<SagaModel> GetContext(SagaModel context)
         {
             return context.SagaType switch {
-                SagaTypeEnum.TransferMoney => _serviceProvider.GetRequiredService<MoneyTransferStrategyContext>(),
+                SagaTypeEnum.CoinTransfer => _serviceProvider.GetRequiredService<MoneyTransferStrategyContext>(),
+                SagaTypeEnum.CoinWithdraw => _serviceProvider.GetRequiredService<MoneyWithdrawStrategyContext>(),
                 _ => throw new NotImplementedException(context.SagaType.ToString())
             };
         }

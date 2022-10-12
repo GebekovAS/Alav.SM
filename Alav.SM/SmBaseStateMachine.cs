@@ -9,11 +9,10 @@ namespace Alav.SM
 {
     /// <inheritdoc/>
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Singleton)]
-    public class SmBaseStateMachine<TRepository, TStrategyContextFactory, TContextModel, TStrategyState> : ISmStateMachine<TRepository, TStrategyContextFactory, TContextModel, TStrategyState>
-        where TStrategyState : Enum
-        where TContextModel : IStrategyContextModel<TStrategyState>
-        where TStrategyContextFactory: ISmStrategyContextFactory<TContextModel, TStrategyState>
-        where TRepository : ISmRepository<TContextModel, TStrategyState>
+    public class SmBaseStateMachine<TRepository, TStrategyContextFactory, TContextModel> : ISmStateMachine<TRepository, TStrategyContextFactory, TContextModel>
+        where TContextModel : IStrategyContextModel
+        where TStrategyContextFactory: ISmStrategyContextFactory<TContextModel>
+        where TRepository : ISmRepository<TContextModel>
     {
         private readonly TRepository _repository;
         private readonly TStrategyContextFactory _strategyContextFactory;
@@ -21,7 +20,7 @@ namespace Alav.SM
         /// <summary>
         /// .ctor
         /// </summary>
-        public SmBaseStateMachine(TRepository repository, TStrategyContextFactory strategyContextFactory, SmUnitOfWork<TContextModel, TStrategyState> unitOfWork)
+        public SmBaseStateMachine(TRepository repository, TStrategyContextFactory strategyContextFactory, SmUnitOfWork<TContextModel> unitOfWork)
         {
             _repository = repository;
             _strategyContextFactory = strategyContextFactory;
