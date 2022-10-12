@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Alav.SM.Exceptions
 {
-    public class SmLoopingStrategyStatesException<TContextModel,TStrategyState> : Exception
-        where TStrategyState : Enum
-        where TContextModel : IStrategyContextModel<TStrategyState>
+    public class SmLoopingStrategyStatesException<TContextModel> : Exception
+        where TContextModel : IStrategyContextModel
     {
         public SmLoopingStrategyStatesException(TContextModel context) : base($"Looping state = {context.State}. CorrelationId = {context.CorrelationId}") { }
     }

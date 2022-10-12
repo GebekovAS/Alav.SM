@@ -11,11 +11,10 @@ namespace Alav.SM.Interfaces
     /// </summary>
     /// <typeparam name="TRepository">Repository</typeparam>
     /// <typeparam name="TState">State</typeparam>
-    public interface ISmStateMachine<TRepository, TStrategyContextFactory, TContextModel, TStrategyState>
-        where TStrategyState : Enum
-        where TContextModel : IStrategyContextModel<TStrategyState>
-        where TStrategyContextFactory : ISmStrategyContextFactory<TContextModel, TStrategyState>
-        where TRepository : ISmRepository<TContextModel, TStrategyState>
+    public interface ISmStateMachine<TRepository, TStrategyContextFactory, TContextModel>
+        where TContextModel : IStrategyContextModel
+        where TStrategyContextFactory : ISmStrategyContextFactory<TContextModel>
+        where TRepository : ISmRepository<TContextModel>
     {
         /// <summary>
         /// Process saga

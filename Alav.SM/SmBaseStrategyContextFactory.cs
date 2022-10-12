@@ -7,11 +7,10 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Singleton)]
-    public abstract class SmBaseStrategyContextFactory<TContextModel, TStrategyState> : ISmStrategyContextFactory<TContextModel, TStrategyState>
-        where TStrategyState: Enum
-        where TContextModel: IStrategyContextModel<TStrategyState>
+    public abstract class SmBaseStrategyContextFactory<TContextModel> : ISmStrategyContextFactory<TContextModel>
+        where TContextModel: IStrategyContextModel
     {
         /// <inheritdoc />
-        public abstract ISmStrategyContext<TContextModel, TStrategyState> GetContext(TContextModel context);
+        public abstract ISmStrategyContext<TContextModel> GetContext(TContextModel context);
     }
 }

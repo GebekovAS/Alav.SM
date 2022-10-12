@@ -10,20 +10,19 @@ namespace Alav.SM.Interfaces
     /// Strategy context
     /// </summary>
     /// <typeparam name="TContextModel">Strategy data contex type</typeparam>
-    public interface ISmStrategyContext<TContextModel, TStrategyState>
-        where TStrategyState: Enum
-        where TContextModel: IStrategyContextModel<TStrategyState>
+    public interface ISmStrategyContext<TContextModel>
+        where TContextModel: IStrategyContextModel
     {
         /// <summary>
         /// Get builder
         /// </summary>
         /// <param name="context">Strategy data context</param>
-        ISmStrategyBuilder<TContextModel, TStrategyState> GetBuilder(TContextModel context);
+        ISmStrategyBuilder<TContextModel> GetBuilder(TContextModel context);
         /// <summary>
         /// Configurate builder
         /// </summary>
         /// <param name="context">Strategy data context</param>
-        ISmStrategyContext<TContextModel, TStrategyState> Configurate(TContextModel context);
+        ISmStrategyContext<TContextModel> Configurate(TContextModel context);
 
         /// <summary>
         /// Process strategies

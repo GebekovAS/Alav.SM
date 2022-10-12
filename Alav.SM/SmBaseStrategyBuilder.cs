@@ -7,9 +7,8 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
-    public abstract class SmBaseStrategyBuilder<TContextModel, TStrategyState> : ISmStrategyBuilder<TContextModel, TStrategyState>
-        where TStrategyState: Enum
-        where TContextModel: IStrategyContextModel<TStrategyState>
+    public abstract class SmBaseStrategyBuilder<TContextModel> : ISmStrategyBuilder<TContextModel>
+        where TContextModel: IStrategyContextModel
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -21,21 +20,21 @@ namespace Alav.SM
             _serviceProvider = serviceProvider;
         }
 
-        protected ISmCompositeStrategy<TContextModel, TStrategyState> RootStrategy;
+        protected ISmCompositeStrategy<TContextModel> RootStrategy;
 
         /// <inheritdoc />
-        public ISmStrategyBuilder<TContextModel, TStrategyState> BuildCompositeStrategy() 
+        public ISmStrategyBuilder<TContextModel> BuildCompositeStrategy() 
         {
-            RootStrategy = _serviceProvider.GetRequiredService<SmCompositeStrategy<TContextModel, TStrategyState>>();
+            RootStrategy = _serviceProvider.GetRequiredService<SmCompositeStrategy<TContextModel>>();
 
             return this;
         }
 
         /// <inheritdoc />
-        public abstract ISmStrategyBuilder<TContextModel, TStrategyState> BuildStrategies();
+        public abstract ISmStrategyBuilder<TContextModel> BuildStrategies();
 
         /// <inheritdoc />
-        public virtual ISmStrategy<TContextModel, TStrategyState> GetResult()
+        public virtual ISmStrategy<TContextModel> GetResult()
         {
             return RootStrategy;
         }

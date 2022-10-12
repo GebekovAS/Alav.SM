@@ -8,9 +8,8 @@ namespace Alav.SM.Interfaces
     /// Strategy
     /// </summary>
     /// <typeparam name="TContextModel"></typeparam>
-    public interface ISmStrategy<TContextModel, TStrategyState>
-        where TStrategyState: Enum
-        where TContextModel: IStrategyContextModel<TStrategyState>
+    public interface ISmStrategy<TContextModel>
+        where TContextModel: IStrategyContextModel
     {
         /// <summary>
         /// Process strategy

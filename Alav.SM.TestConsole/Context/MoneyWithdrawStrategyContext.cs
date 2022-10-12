@@ -7,19 +7,20 @@ using System.Text.Json;
 
 namespace Alav.SM.TestConsole.Context
 {
-    public class MoneyTransferStrategyContext : SmBaseStrategyContext<SagaModel>
+    public class MoneyWithdrawStrategyContext : SmBaseStrategyContext<SagaModel>
     {
-        public MoneyTransferStrategyContext(SmDirector<SagaModel> director,
+        public MoneyWithdrawStrategyContext(SmDirector<SagaModel> director,
             SmUnitOfWork<SagaModel> unitOfWork,
             IServiceProvider serviceProvider) : base(director, unitOfWork, serviceProvider)
-        {}
+        { }
 
         public override ISmStrategyBuilder<SagaModel> GetBuilder(SagaModel context)
         {
             var sagaObject = JsonSerializer.Deserialize<SagaObjectModel>(context.Object);
 
-            return sagaObject.CurrencyTypeCode switch {
-                "COIN" => ServiceProvider.GetRequiredService<CoinTransferBuilder>(),
+            return sagaObject.CurrencyTypeCode switch
+            {
+                "COIN" => ServiceProvider.GetRequiredService<CoinWithdrawBuilder>(),
                 _ => throw new NotImplementedException(sagaObject.CurrencyTypeCode)
             };
         }

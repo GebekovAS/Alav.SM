@@ -18,9 +18,12 @@ namespace Alav.SM.TestConsole
                             .Scan()
                             .BuildServiceProvider();
 
-            var stateMachine = services.GetService<SmBaseStateMachine<SagaRepository, StrategyContextFactory, SagaModel, SagaStateEnum>>();
+            var stateMachine = services.GetService<SmBaseStateMachine<SagaRepository, StrategyContextFactory, SagaModel>>();
 
-            stateMachine.ProcessAsync(Guid.NewGuid());
+            stateMachine
+                .ProcessAsync(Guid.NewGuid())
+                .GetAwaiter()
+                .GetResult();
 
             Console.WriteLine("End");
             Console.ReadKey();

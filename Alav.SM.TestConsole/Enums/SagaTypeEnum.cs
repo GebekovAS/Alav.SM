@@ -2,7 +2,7 @@
 {
     public enum SagaTypeEnum
     {
-        TransferMoney = 0,
-        BlockMoney = 1
+        CoinTransfer = 0,
+        CoinWithdraw = 1
     }
 }

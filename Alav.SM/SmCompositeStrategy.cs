@@ -12,28 +12,27 @@ namespace Alav.SM
 {
     /// <inheritdoc />
     [ADI(ServiceLifetime = DI.Enums.ADIServiceLifetime.Transient)]
-    public class SmCompositeStrategy<TContextModel,TStrategyState> : ISmCompositeStrategy<TContextModel, TStrategyState>
-        where TStrategyState: Enum
-        where TContextModel: IStrategyContextModel<TStrategyState>
+    public class SmCompositeStrategy<TContextModel> : ISmCompositeStrategy<TContextModel>
+        where TContextModel: IStrategyContextModel
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly SmUnitOfWork<TContextModel, TStrategyState> _unitOfWork;
+        private readonly SmUnitOfWork<TContextModel> _unitOfWork;
 
         /// <summary>
         /// .ctor
         /// </summary>
         public SmCompositeStrategy(IServiceProvider serviceProvider,
-            SmUnitOfWork<TContextModel, TStrategyState> unitOfWork)
+            SmUnitOfWork<TContextModel> unitOfWork)
         {
             _serviceProvider = serviceProvider;
             _unitOfWork = unitOfWork;
         }
 
-        private readonly Dictionary<TStrategyState, (ISmStrategy<TContextModel, TStrategyState> strategy, TStrategyState nextState)> _strategies = new Dictionary<TStrategyState, (ISmStrategy<TContextModel, TStrategyState> strategy, TStrategyState nextState)>();
+        private readonly Dictionary<int, (ISmStrategy<TContextModel> strategy, int nextState)> _strategies = new Dictionary<int, (ISmStrategy<TContextModel> strategy, int nextState)>();
 
         /// <inheritdoc />
-        public ISmCompositeStrategy<TContextModel, TStrategyState> AddStrategy<TStrategy>(TStrategyState state, TStrategyState nextState)
-            where TStrategy : ISmStrategy<TContextModel, TStrategyState>
+        public ISmCompositeStrategy<TContextModel> AddStrategy<TStrategy>(int state, int nextState)
+            where TStrategy : ISmStrategy<TContextModel>
         {
             _strategies.Add(state, (_serviceProvider.GetRequiredService<TStrategy>(), nextState));
 
@@ -41,7 +40,7 @@ namespace Alav.SM
         }
 
         /// <inheritdoc />
-        public ISmCompositeStrategy<TContextModel, TStrategyState> Remove(TStrategyState state)
+        public ISmCompositeStrategy<TContextModel> Remove(int state)
         {
             _strategies.Remove(state);
 
@@ -61,7 +60,7 @@ namespace Alav.SM
 
                 if (currentState.Equals(context.State))
                 {
-                    throw new SmLoopingStrategyStatesException<TContextModel, TStrategyState>(context);
+                    throw new SmLoopingStrategyStatesException<TContextModel>(context);
                 }
 
                 await _unitOfWork.Repository.SaveAsync(context, cancellationToken);
