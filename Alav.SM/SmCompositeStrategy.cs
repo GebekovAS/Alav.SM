@@ -53,18 +53,18 @@ namespace Alav.SM
             var currentState = context.State;
             while (_strategies.ContainsKey(currentState))
             {
-
                 var item = _strategies[context.State];
                 await item.strategy.ProcessAsync(context);
-                context.State = item.nextState;
 
-                if (currentState.Equals(context.State))
+                if (currentState.Equals(item.nextState))
                 {
                     throw new SmLoopingStrategyStatesException<TContextModel>(context);
                 }
 
-                await _unitOfWork.Repository.SaveAsync(context, cancellationToken);
+                context.State = item.nextState;
                 currentState = context.State;
+
+                await _unitOfWork.Repository.SaveAsync(context, cancellationToken);
             }
         }
     }
